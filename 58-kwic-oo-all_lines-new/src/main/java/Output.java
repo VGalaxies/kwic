@@ -35,7 +35,7 @@
  *  @version $Id$
 */
 
-public class Output{
+public class Output {
 
 //----------------------------------------------------------------------
 /**
@@ -59,13 +59,15 @@ public class Output{
 //----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
-/**
- * Prints the lines at the standard output.
- * @param alphabetizer source of the sorted lines
- */
 
-  public void print(Alphabetizer alphabetizer){
-    for(int i = 0; i < alphabetizer.getLineCount(); i++)
+  /**
+   * Prints the lines at the standard output.
+   *
+   * @param alphabetizer source of the sorted lines
+   */
+
+  public void print(Alphabetizer alphabetizer) {
+    for (int i = 0; i < alphabetizer.getLineCount(); i++)
       System.out.println(alphabetizer.getLineAsString(i));
   }
 

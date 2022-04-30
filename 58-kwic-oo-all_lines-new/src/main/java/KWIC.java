@@ -46,7 +46,7 @@
  *  @version $Id$
 */
 
-public class KWIC{
+public class KWIC {
 
 //----------------------------------------------------------------------
 /**
@@ -70,31 +70,42 @@ public class KWIC{
 //----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
-/**
- * Parses the data, makes shifts and sorts them. At the end prints the
- * sorted shifts.
- * @param file name of the input file
- */
 
-  public void execute(String file){
+  /**
+   * Parses the data, makes shifts and sorts them. At the end prints the
+   * sorted shifts.
+   *
+   * @param file name of the input file
+   */
 
+  public void execute(String file) {
+    Input input = new Input();
+    LineStorage storage = new LineStorage();
+    input.parse(file, storage);
+    CircularShifter shifter = new CircularShifter();
+    shifter.setup(storage);
+    Alphabetizer alphabetizer = new Alphabetizer();
+    alphabetizer.alpha(shifter);
+    Output output = new Output();
+    output.print(alphabetizer);
   }
 
 //----------------------------------------------------------------------
-/**
- * Main function checks the command line arguments. The program expects 
- * exactly one command line argument specifying the name of the file 
- * that contains the data. If the program has not been started with 
- * proper command line arguments, main function exits
- * with an error message. Otherwise, a KWIC instance is created and program
- * control is passed to it.
- * @param args command line arguments
- */
 
-  public static void main(String[] args){
+  /**
+   * Main function checks the command line arguments. The program expects
+   * exactly one command line argument specifying the name of the file
+   * that contains the data. If the program has not been started with
+   * proper command line arguments, main function exits
+   * with an error message. Otherwise, a KWIC instance is created and program
+   * control is passed to it.
+   *
+   * @param args command line arguments
+   */
 
+  public static void main(String[] args) {
     KWIC kwic = new KWIC();
-    kwic.execute("Test_Case.txt");
+    kwic.execute("Test_Case2.txt");
   }
 
 //----------------------------------------------------------------------

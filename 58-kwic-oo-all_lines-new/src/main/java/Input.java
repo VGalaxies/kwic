@@ -42,7 +42,7 @@ import java.util.StringTokenizer;
  *  <ul>
  *  <li>Lines are separated by the line separator character(s) (on Unix '\n', on Windows '\r\n')
  *  <li>Each line consists of a number of words. Words are delimited by any number and combination
- *  of the space chracter (' ') and the horizontal tabulation chracter ('\t').
+ *  of the space character (' ') and the horizontal tabulation character ('\t').
  *  </ul>
  *  Data is parsed and stored in memory as an instance of the LineStorage class:
  *  <ul>
@@ -57,7 +57,7 @@ import java.util.StringTokenizer;
  *  @version $Id$
 */
 
-public class Input{
+public class Input {
 
 //----------------------------------------------------------------------
 /**
@@ -81,33 +81,35 @@ public class Input{
 //----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
-/**
- * This method reads and parses a KWIC input file. If an I/O exception occurs
- * during the execution of this method, an error message is shown and program
- * exits.
- * @param file name of KWIC input file
- * @param line_storage holds the parsed data
- */
 
-  public void parse(String file, LineStorage line_storage){
-    try{
+  /**
+   * This method reads and parses a KWIC input file. If an I/O exception occurs
+   * during the execution of this method, an error message is shown and program
+   * exits.
+   *
+   * @param file         name of KWIC input file
+   * @param line_storage holds the parsed data
+   */
+
+  public void parse(String file, LineStorage line_storage) {
+    try {
       BufferedReader reader = new BufferedReader(new FileReader(file));
 
       String line = reader.readLine();
-      while(line != null){
+      while (line != null) {
         StringTokenizer tokenizer = new StringTokenizer(line); // " \t\n\r\f" are delimiter character
-        if(tokenizer.countTokens() > 0)
+        if (tokenizer.countTokens() > 0)
           line_storage.addEmptyLine();
-        while(tokenizer.hasMoreTokens())
+        while (tokenizer.hasMoreTokens())
           line_storage.addWord(tokenizer.nextToken(), line_storage.getLineCount() - 1);
         line = reader.readLine();
       }
-      
-    }catch(FileNotFoundException exc){
+
+    } catch (FileNotFoundException exc) {
       exc.printStackTrace();
       System.err.println("KWIC Error: Could not open " + file + "file.");
       System.exit(1);
-    }catch(IOException exc){
+    } catch (IOException exc) {
       exc.printStackTrace();
       System.err.println("KWIC Error: Could not read " + file + "file.");
       System.exit(1);

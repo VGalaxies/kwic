@@ -59,7 +59,7 @@ public class KWIC{
    + 实现4个类。    
         - LineStorage
         - CircularShift
-        - Alphabetizier
+        - Alphabetizer
         - KWIC
    + 思考如果涉及潜在的变更，需要设计修改哪些的方法
         - 存储的形式发生更改（比如采用index方式，而是记录完整字符串）

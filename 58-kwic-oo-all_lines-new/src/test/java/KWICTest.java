@@ -34,7 +34,7 @@ public class KWICTest {
 	@org.junit.Test
 	public void testPlus1() {
 		int len;
-		byte[] data={};
+		byte[] data = {};
 
 		kwic.execute("Test_Case.txt");
 
@@ -49,10 +49,11 @@ public class KWICTest {
 		}
 		assertEquals(bytes.toString(), new String(data));
 	}
+
 	@org.junit.Test
 	public void testPlus2() {
 		int len;
-		byte[] data={};
+		byte[] data = {};
 		kwic.execute("Test_Case2.txt");
 
 		try {
@@ -66,6 +67,4 @@ public class KWICTest {
 		}
 		assertEquals(bytes.toString(), new String(data));
 	}
-
-
 }

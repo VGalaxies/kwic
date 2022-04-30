@@ -42,7 +42,7 @@
  *  @version $Id$
 */
 
-public class CircularShifter{
+public class CircularShifter {
 
 //----------------------------------------------------------------------
 /**
@@ -51,10 +51,9 @@ public class CircularShifter{
  */
 //----------------------------------------------------------------------
 
-/**
- * LineStorage for circular shifts
- *
- */
+  /**
+   * LineStorage for circular shifts
+   */
 
   private LineStorage shifts_;
 
@@ -73,108 +72,134 @@ public class CircularShifter{
 //----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
-/**
- * Produces all circular shifts of lines in a given set. Circular shifts
- * are stored internally and can be queried by means of other methods. Note,
- * that for each line the first circular shift is same as the original line.
- * @param lines A set of lines
- * @see #getChar
- * @see #getCharCount
- * @see #getWord
- * @see #getWordCount
- * @see #getLine
- * @see #getLineCount
- */
 
-  public void setup(LineStorage lines){
+  /**
+   * Produces all circular shifts of lines in a given set. Circular shifts
+   * are stored internally and can be queried by means of other methods. Note,
+   * that for each line the first circular shift is same as the original line.
+   *
+   * @param lines A set of lines
+   * @see #getChar
+   * @see #getCharCount
+   * @see #getWord
+   * @see #getWordCount
+   * @see #getLine
+   * @see #getLineCount
+   */
+
+  public void setup(LineStorage lines) {
     shifts_ = new LineStorage();
+    for (int i = 0 ; i < lines.getLineCount(); ++i) {
+      String[] words = lines.getLine(i);
+      String[] target = words.clone();
 
-
+      int count = 0;
+      while (count < words.length) {
+        String st = target[0];
+        System.arraycopy(target, 1, target, 0, words.length - 1);
+        target[words.length - 1] = st;
+        count++;
+        shifts_.addLine(target);
+      }
+    }
   }
 
 //----------------------------------------------------------------------
-/**
- * Gets the character from the specified position in the specified word 
- * in a particular line.
- * @param position character index in the word
- * @param word word index in the line
- * @param line line index
- * @return char
- */
 
-  public char getChar(int position, int word, int line){
+  /**
+   * Gets the character from the specified position in the specified word
+   * in a particular line.
+   *
+   * @param position character index in the word
+   * @param word     word index in the line
+   * @param line     line index
+   * @return char
+   */
+
+  public char getChar(int position, int word, int line) {
     return shifts_.getChar(position, word, line);
   }
 
-/**
- * Gets the number of characters in this particular word.
- * @param word word index in the line
- * @param line line index
- * @return int
- */
+  /**
+   * Gets the number of characters in this particular word.
+   *
+   * @param word word index in the line
+   * @param line line index
+   * @return int
+   */
 
-  public int getCharCount(int word, int line){
+  public int getCharCount(int word, int line) {
     return shifts_.getCharCount(word, line);
   }
 
 //----------------------------------------------------------------------
-/**
- * Gets the word from the specified position in a particular line
- * String representing the word is returned.
- * @param word word index in the line
- * @param line line index
- * @return String
- */
 
-  public String getWord(int word, int line){
+  /**
+   * Gets the word from the specified position in a particular line
+   * String representing the word is returned.
+   *
+   * @param word word index in the line
+   * @param line line index
+   * @return String
+   */
+
+  public String getWord(int word, int line) {
     return shifts_.getWord(word, line);
   }
 
 //----------------------------------------------------------------------
-/**
- * Gets the number of words in this particular line.
- * @param line line index
- * @return int
- */
 
-  public int getWordCount(int line){
+  /**
+   * Gets the number of words in this particular line.
+   *
+   * @param line line index
+   * @return int
+   */
+
+  public int getWordCount(int line) {
     return shifts_.getWordCount(line);
   }
 
 //----------------------------------------------------------------------
-/**
- * Gets the line from the specified position.
- * String array representing the line is returned.
- * @param line line index
- * @return String[]
- * @see #getLineAsString
- */
 
-  public String[] getLine(int line){
+  /**
+   * Gets the line from the specified position.
+   * String array representing the line is returned.
+   *
+   * @param line line index
+   * @return String[]
+   * @see #getLineAsString
+   */
+
+  public String[] getLine(int line) {
     return shifts_.getLine(line);
   }
 
 
 //----------------------------------------------------------------------
-/**
- * Gets the line from the specified position.
- * String representing the line is returned.
- * @param line line index
- * @return String
- * @see #getLine
- */
 
-  public String getLineAsString(int line){
+  /**
+   * Gets the line from the specified position.
+   * String representing the line is returned.
+   *
+   * @param line line index
+   * @return String
+   * @see #getLine
+   */
+
+  public String getLineAsString(int line) {
     return shifts_.getLineAsString(line);
   }
 
 //----------------------------------------------------------------------
-/**
- * Gets the number of lines.
- * @return int
- */
 
-  public int getLineCount(){
+  /**
+   * Gets the number of lines.
+   *
+   * @return int
+   */
+
+  public int getLineCount() {
     return shifts_.getLineCount();
   }
 
