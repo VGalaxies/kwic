@@ -21,7 +21,7 @@
  *  Description:
  *    The basic KWIC system is defined as follows. The KWIC system accepts an ordered 
  *  set of lines, each line is an ordered set of words, and each word is an ordered set
- *  of characters. Any line may be "circularly shifted" by repeadetly removing the first
+ *  of characters. Any line may be "circularly shifted" by repeatedly removing the first
  *  word and appending it at the end of the line. The KWIC index system outputs a
  *  listing of all circular shifts of all lines in alphabetical order.
  * </file>
@@ -38,8 +38,7 @@ import java.io.BufferedReader;
 import java.io.CharArrayWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.StringTokenizer;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  *  This class is an implementation of the main/subroutine architectural solution 
@@ -66,7 +65,7 @@ import java.util.ArrayList;
  *  as that produced by circular shift function. In this case, however, the circular 
  *  shifts are listed in another order (they are sorted alphabetically).
  *  <li>Output. This function uses the arrays produced by input and alphabetizing
- *  function. It produces a nicely formated output listing of all circular shifts.
+ *  function. It produces a nicely formatted output listing of all circular shifts.
  *  </ul>
  *  @author  dhelic
  *  @version $Id$
@@ -117,6 +116,8 @@ public class KWIC{
 
   private int[][] alphabetized_;
 
+  private LinkedList<String> res_ = new LinkedList<>();
+
 //----------------------------------------------------------------------
 /**
  * Constructors
@@ -137,8 +138,8 @@ public class KWIC{
  * If some system I/O error occurs the program exits with an error message.
  * The format of raw data is as follows. Lines are separated by the line separator
  * character(s) (on Unix '\n', on Windows '\r\n'). Each line consists of a number of
- * words. Words are delimited by any number and combination of the space chracter (' ')
- * and the horizontal tabulation chracter ('\t'). The entered data is parsed in the 
+ * words. Words are delimited by any number and combination of the space character (' ')
+ * and the horizontal tabulation character ('\t'). The entered data is parsed in the
  * following way. All line separators are removed from the data, all horizontal tabulation
  * word delimiters are replaced by a single space character, and all multiple word
  * delimiters are replaced by a single space character. Then the parsed data is represented 
@@ -147,14 +148,45 @@ public class KWIC{
  */
 
   public void input(String file){
+    try {
+      FileReader fr = new FileReader(file);
+      BufferedReader br = new BufferedReader(fr);
 
+      String line;
+      while ((line = br.readLine()) != null) {
+        String[] words = line.split("[\\s]+");
+
+        String[] target = words.clone();
+        int count = 0;
+
+        while (count < words.length) {
+          String st = target[0];
+          for (int i = 0 ; i < words.length - 1; ++i) {
+            target[i] = target[i + 1];
+          }
+          target[words.length - 1] = st;
+          count++;
+
+          res_.add(String.join(" ", target));
+        }
+      }
+      br.close();
+
+      Collections.sort(res_);
+      for (String res : res_) {
+        System.out.println(res);
+      }
+
+    } catch(Exception ex) {
+      ex.printStackTrace();
+    }
   }
 
 //----------------------------------------------------------------------
 /**
  * This function processes arrays prepared by the input
  * function and produces circular shifts of the stored lines. A circular
- * shift is a line where the first word is removed from the begin of a line
+ * shift is a line where the first word is removed from the beginning of a line
  * and appended at the end of the line. To obtain all circular shifts of a line
  * we repeat this process until we can't obtain any new lines. Circular shifts 
  * are represented as a 2D array that keeps circular shift indices (each circular 
@@ -198,14 +230,14 @@ public class KWIC{
  * not been started with proper command line arguments, main function exits
  * with an error message. Otherwise, the input function is called first to read the 
  * data from the file. After that the circularShift and alphabetizing 
- * functions are called to produce and sort the shifts respectivelly. Finally, the output
+ * functions are called to produce and sort the shifts respectively. Finally, the output
  * function prints the sorted shifts at the standard output.
- * @param args command line argumnets
+ * @param args command line arguments
  */
 
   public static void main(String[] args){
     KWIC kwic = new KWIC();
-    kwic.input("Test_Case.txt");
+    kwic.input("Test_Case2.txt");
     kwic.circularShift();
     kwic.alphabetizing();
     kwic.output();
